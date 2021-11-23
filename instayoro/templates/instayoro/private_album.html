@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block Title %}
+    {{profile_username}}
+{% endblock %}
+
+{% block main-content %}
+    <h1>{{profile_username}}</h1>
+    <section>
+        <div class="container">
+            <div class="row">
+                <h4>Edit Album</h4>
+                <form method="post">
+                    {% csrf_token %}
+                    {{form.as_p}}
+                    <button type="submit">Submit</button>
+                </form>
+            </div>
+            <div class="row">
+                {% if images %}
+                    <div class="container">
+                        <div class="masonry">
+                            {% for image in images %}
+                                <div class="mgrid p-2">
+                                    <div class="" style="text-align: {{image.position}}; color: {{image.color}};" >
+                                        <p>
+                                            {{image.title}}
+                                        </p>
+                                    </div>
+                                    <img class="img-fluid" src="{{image.image.url}}">
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% else %}
+                    <p>No images.</p>
+                {% endif %}
+            </div>
+        </div>
+    </section>
+
+    
+{% endblock %}

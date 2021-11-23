@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+
+{% csrf_token %}
+{% load static %}
+
+<html>
+    <head>
+        <title>
+            {% block Title %}Yoro{% endblock %}
+        </title>
+
+        <link rel="stylesheet" href="{% static 'instayoro/src/css/mdb.min.css' %}">
+        <link rel="stylesheet" href="{% static 'instayoro/src/css/masonry-index.css' %}">
+        <script type="text/javascript" src="{% static 'instayoro/src/js/mdb.min.js' %}"></script>
+    </head>
+
+    <body>
+        <nav class="navbar navbar-expand-md text-white fw-light bg-dark p-2">
+            <a class="navbar-brand text-white" href="/">Home</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarToggler" aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarToggler">
+                <ul class="navbar-nav ms-auto">
+                    {% if user.is_authenticated %}
+                    <li class="navbar-item">
+                        <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+                    </li>
+                    <li class="navbar-item">
+                        <a class="nav-link" href="/profile/{{user.username}}">{{user.username}}</a>
+                    </li>
+                    {% else %}
+                        <li class="navbar-item">
+                            <a class="nav-link" href="{% url 'login' %}">Login</a>
+                        </li>
+                        <li class="navbar-item">
+                            <a class="nav-link" href="{% url 'new_user_registration' %}">Register</a>
+                        </li>
+                    {% endif %}
+                    {% block header-content %}
+                    {% endblock %}
+                </ul>
+            </div>
+            
+        </nav>
+        
+        <main class="container-fluid mb-3">
+            {% block main-content %}
+            {% endblock %}
+        </main>
+
+        <footer>
+
+        </footer>
+        </body>
+    </body>
+</html>

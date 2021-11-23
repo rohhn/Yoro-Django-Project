@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+
+{% block Title %}
+    {{profile_username}}
+{% endblock %}
+
+{% block header-content %}
+    <nav>
+        <a href="{% url 'logout' %}">Logout</a>
+    </nav>
+{% endblock %}
+
+{% block main-content %}
+    <h1>{{profile_username}}</h1>
+    <div>
+        <a href="{% url 'new_album' %}">Create new Album</a>
+        <a href="{% url 'new_image' %}">Add image</a>
+    </div>
+
+    <div id="outbox">
+        {% if unpublished_albums %}
+            <h2>Unpublished Albums</h2><br>
+            <ul>
+                {% for album in unpublished_albums %}
+                    <li>{{album.name}} | {{album.hashtags}} | {{album.is_published}}</li>
+
+                    {% if album.images %}
+                        <h2>Images</h2><br>
+                        <ul>
+                            {% for image in images %}
+                                <li>{{image.title}}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No unpublished albums</p>
+        {% endif %}
+    </div>
+
+    <div id="outbox">
+        {% if published_albums %}
+            <h2>published Albums</h2><br>
+            <ul>
+                {% for album in published_albums %}
+                    <li>{{album.name}} | {{album.hashtags}} | {{album.is_published}}</li>
+
+                    {% if album.images %}
+                        <h2>Images</h2><br>
+                        <ul>
+                            {% for image in images %}
+                                <li>{{image.title}}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                    
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No published albums</p>
+        {% endif %}
+    </div>
+    
+    <!-- {% if albums %}
+        <h2>Albums</h2><br>
+        <ul>
+            {% for album in albums %}
+                <li>{{album.name}} | {{album.hashtags}} | {{album.is_published}}</li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No albums</p>
+    {% endif %} -->
+
+
+    <!-- {% if images %}
+        <h2>Images</h2><br>
+        <ul>
+            {% for image in images %}
+                <li>{{image.title}}</li>
+            {% endfor %}
+        </ul>
+    {% endif %} -->
+{% endblock %}

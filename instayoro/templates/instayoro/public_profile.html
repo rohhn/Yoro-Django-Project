@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+
+{% block Title %}
+    {{profile_username}}
+{% endblock %}
+
+{% block main-content %}
+    <h1>{{profile_username}}</h1>
+    <section>
+        {% if published_albums %}
+            {% for album in published_albums %}
+                <div class="row">
+                    <div class="container">
+                        <div class="row">
+                            <span><h3>Album: {{album.name}}</h3></span>
+                            <!-- <span><p>by <a href="profile/{{album.created_by.username}}">{{album.created_by.username}}</a></p></span> -->
+                        </div>
+                        {% if album.images %}
+                            <div class="row">
+                                <div class="container">
+                                    <div class="masonry">
+                                        {% for image in album.images %}
+                                            <div class="mgrid p-2">
+                                                <div class="" style="text-align: {{image.position}}; color: {{image.color}};" >
+                                                    <p>
+                                                        {{image.title}}
+                                                    </p>
+                                                </div>
+                                                <img class="img-fluid" src="{{image.image.url}}">
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+                        {% else %}
+                            <p>No images.</p>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endfor %}
+            <ul>
+                {% for album in albums_images %}
+                    <li>{{album.name}} | {{album.hashtags}} | {{album.is_published}}</li>
+
+                    {% if album.images %}
+                        <h2>Images</h2><br>
+                        <ul>
+                            {% for image in album.images %}
+                                <li style="color: {{image.color}};">{{image.title}}</li>
+                            {% endfor %}
+                        </ul>
+                    {% else %}
+                        <p>No images.</p>
+                    {% endif %} 
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No albums</p>
+        {% endif %}
+    </section>
+    
+{% endblock %}

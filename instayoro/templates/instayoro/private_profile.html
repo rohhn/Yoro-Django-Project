@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+
+{% block Title %}
+    {{profile_username}}
+{% endblock %}
+
+{% block main-content %}
+    <h1>{{profile_username}}</h1>
+    <div>
+        <a href="{% url 'new_album' %}">New album</a> | 
+        <a href="{% url 'new_image' %}">Add image</a>
+    </div>
+
+    <section id="unpublished">
+        {% if unpublished_albums %}
+                <h2>Yet to publish</h2><br>
+                {% for album in unpublished_albums %}
+                    <div class="row m-2">
+                        <div class="container">
+                            <div class="row">
+                                <span><h3>Album: <a href="/profile/{{user.username}}/album/{{album.name}}">{{album.name}}</a></h3></span>
+                            </div>
+                            
+                            <div class="row">
+                                {% if album.images %}
+                                    <div class="container">
+                                        <div class="masonry">
+                                            {% for image in album.images %}
+                                                <div class="mgrid p-2">
+                                                    <div class="" style="text-align: {{image.position}}; color: {{image.color}};" >
+                                                        <p>
+                                                            {{image.title}}
+                                                        </p>
+                                                    </div>
+                                                    <img class="img-fluid" src="{{image.image.url}}">
+                                                </div>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                {% else %}
+                                    <p>No images.</p>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                    </div>
+                {% endfor %}
+        {% else %}
+            <p>No unpublished albums</p>
+        {% endif %}
+    </section>
+
+    <section id="pub">
+        {% if published_albums %}
+                <h2>Published</h2><br>
+                {% for album in published_albums %}
+                    <div class="row m-2">
+                        <div class="container">
+                            <div class="row">
+                                <span><h3>Album: <a href="/profile/{{user.username}}/album/{{album.name}}">{{album.name}}</a></h3></span>
+                            </div>
+                            
+                            <div class="row">
+                                {% if album.images %}
+                                    <div class="container">
+                                        <div class="masonry">
+                                            {% for image in album.images %}
+                                                <div class="mgrid p-2">
+                                                    <div class="" style="text-align: {{image.position}}; color: {{image.color}};" >
+                                                        <p>
+                                                            {{image.title}}
+                                                        </p>
+                                                    </div>
+                                                    <img class="img-fluid" src="{{image.image.url}}">
+                                                </div>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                {% else %}
+                                    <p>No images.</p>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                    </div>
+                {% endfor %}
+        {% else %}
+            <p>No published albums</p>
+        {% endif %}
+    </section>
+
+    
+{% endblock %}

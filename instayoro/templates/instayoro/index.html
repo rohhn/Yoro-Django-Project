@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+
+
+{% block main-content %}
+    <div class="container mt-3">
+        <div class="col-sm-12">
+            <section class="row text-center">
+                <h1 class="display-3">InstaYoro</h1>
+            </section>
+
+            <section class="row" id="album">
+                {% if albums %}
+                    <h2 class="display-5">Albums</h2><br>
+                    <div class="container">
+                        <div class="masonry">
+                            {% for album in albums %}
+                                <div class="mgrid p-3">
+                                    <span><h4>{{album.name}}</h4><p> by <a href="profile/{{album.created_by.username}}">{{album.created_by.username}}</a></p></span>
+                                    <p>{{album.hashtags}}</p>
+                                    <a class="mgrid__link" href="profile/{{album.created_by.username}}"></a>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% else %}
+                    <p>No albums</p>
+                {% endif %}
+            </section>
+            <section class="row" id="images">
+                {% if images %}
+                    <h2>Images</h2><br>
+                    <div class="container">
+                        <div class="masonry">
+                                {% for image in images %}
+                                    <div class="mgrid p-2">
+                                        <div class="" style="text-align: {{image.position}}; color: {{image.color}};" >
+                                            <p>
+                                                {{image.title}}
+                                            </p>
+                                        </div>
+                                        <img class="img-fluid" src="{{image.image.url}}">
+                                        <!-- <li style="color: {{image.color}};">{{image.title}} | {{image.hashtags}}</li> -->
+                                    </div>
+                                {% endfor %}
+                        </div>
+                    </div>
+                    <!-- <ul>
+                        {% for image in images %}
+                            <li style="color: {{image.color}};">{{image.title}} | {{image.hashtags}}</li>
+                        {% endfor %}
+                    </ul> -->
+                {% endif %}
+            </section>
+        </div>
+    </div>
+{% endblock %}
